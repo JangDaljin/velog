@@ -1,0 +1,11 @@
+{
+  "name": "worker-threads",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node .",
+    "lint": "eslint --flag unstable_ts_config --cache"
+  },
+  "dependencies": {}
+}
