@@ -1,0 +1,13 @@
+{
+  "name": "roll",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node .",
+    "lint": "eslint --flag unstable_ts_config --cache"
+  },
+  "dependencies": {
+    "robotjs": "0.6.0"
+  }
+}
