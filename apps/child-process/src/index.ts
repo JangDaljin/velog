@@ -27,7 +27,7 @@ function execChildProcess(): void {
     FOO="qwer"
     echo $BAR
     echo $FOO`,
-    (error, stdout, stderr) => {
+    (error, stdout) => {
       if (error) {
         console.error(`exec error: ${error}`);
         return;
@@ -49,6 +49,8 @@ function forkChildProcess(): void {
       worker.kill();
     }, 1000);
   });
-  worker.on('exit', (code) => `child process exited with code ${code}`);
+  worker.on('exit', (code) =>
+    console.log(`child process exited with code ${code}`),
+  );
 }
 forkChildProcess();

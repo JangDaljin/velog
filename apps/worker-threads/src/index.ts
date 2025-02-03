@@ -13,7 +13,7 @@ function worker(): Promise<void> {
       reject(error);
     });
     worker.on('exit', (code) => {
-      `Worker stopped with exit code ${code}`;
+      console.log(`Worker stopped with exit code ${code}`);
     });
   });
 }

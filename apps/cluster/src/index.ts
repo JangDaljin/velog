@@ -1,6 +1,5 @@
 import cluster, { Worker } from 'cluster';
 import crypto from 'crypto';
-import os from 'os';
 
 function main(): void {
   if (cluster.isPrimary) {
