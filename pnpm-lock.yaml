@@ -63,6 +63,12 @@ importers:
         specifier: 0.6.0
         version: 0.6.0
 
+  apps/roll:
+    dependencies:
+      robotjs:
+        specifier: 0.6.0
+        version: 0.6.0
+
   apps/template: {}
 
   apps/worker-threads: {}
