@@ -1,9 +1,7 @@
-import { Sequelize } from 'sequelize';
+import { sequelize } from './sequelize';
 
-export const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './db/schema.db',
-});
+export * from './sequelize';
+export * from './models';
 
 export async function test(): Promise<void> {
   try {

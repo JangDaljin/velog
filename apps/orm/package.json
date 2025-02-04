@@ -5,11 +5,16 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node .",
-    "lint": "eslint --flag unstable_ts_config --cache"
+    "lint": "eslint --flag unstable_ts_config --cache",
+    "typeorm:migration:generate": "typeorm-ts-node-commonjs migration:generate ./src/typeorm/migrations/migration -d ./src/typeorm/data-source.ts",
+    "typeorm:migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/typeorm/data-source.ts",
+    "typeorm:migration:revert": "typeorm-ts-node-commonjs migration:revert -d ./src/typeorm/data-source.ts"
   },
   "dependencies": {
     "sequelize": "6.37.5",
     "sequelize-cli": "6.6.2",
+    "typeorm": "0.3.20",
+    "reflect-metadata": "0.2.2",
     "sqlite3": "5.1.7"
   }
 }

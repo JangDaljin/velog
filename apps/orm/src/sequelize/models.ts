@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '.';
+import { sequelize } from './sequelize';
 
 export class PostModel extends Model {}
 PostModel.init(
