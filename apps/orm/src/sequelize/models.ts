@@ -25,6 +25,7 @@ PostModel.init(
   },
   {
     sequelize,
+    tableName: 'Post',
   },
 );
 
@@ -52,6 +53,7 @@ UserModel.init(
   },
   {
     sequelize,
+    tableName: 'User',
     indexes: [
       {
         fields: ['age'],

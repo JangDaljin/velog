@@ -1,11 +1,14 @@
 import 'reflect-metadata';
 import * as MySequelize from './sequelize';
 import * as MyTypeOrm from './typeorm';
+import * as MyMikroOrm from './mikro-orm';
 
 main();
+
 async function main(): Promise<void> {
   await runSequelize();
   await runTypeOrm();
+  await runMikroOrm();
 }
 
 async function runSequelize(): Promise<void> {
@@ -135,4 +138,61 @@ async function runTypeOrm(): Promise<void> {
   } finally {
     await MyTypeOrm.disconnect();
   }
+}
+
+async function runMikroOrm(): Promise<void> {
+  const mikroOrm = await MyMikroOrm.connect();
+  const em = mikroOrm.em.fork();
+
+  const user = em.create(MyMikroOrm.UserEntity, {
+    name: 'mikro-orm-test-1',
+    age: 10,
+  });
+  em.persist(user);
+
+  const post1 = em.create(MyMikroOrm.PostEntity, {
+    title: 'mikro-orm-title-1',
+    content: 'mikro-orm-content-1',
+    user,
+  });
+  em.persist(post1);
+
+  const post2 = em.create(MyMikroOrm.PostEntity, {
+    title: 'mikro-orm-title-2',
+    content: 'mikro-orm-content-2',
+    user,
+  });
+  em.persist(post2);
+
+  await em.flush();
+
+  const users1 = await em.findAll(MyMikroOrm.UserEntity, {
+    populate: ['posts'],
+    strategy: 'select-in',
+  });
+  users1.forEach((user) => {
+    console.log({ ...user });
+  });
+
+  const users2 = await em.findAll(MyMikroOrm.UserEntity, {
+    populate: ['posts'],
+    strategy: 'joined',
+  });
+  users2.forEach((user) => {
+    console.log({ ...user });
+  });
+
+  const posts1 = await em.findAll(MyMikroOrm.PostEntity);
+  posts1.forEach((post) => {
+    console.log({ ...post });
+  });
+
+  const posts2 = await em.findAll(MyMikroOrm.PostEntity, {
+    populate: ['*'],
+  });
+  posts2.forEach((post) => {
+    console.log({ ...post });
+  });
+
+  await mikroOrm.close();
 }

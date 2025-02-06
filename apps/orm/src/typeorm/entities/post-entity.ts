@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { User } from './user-entity';
 
-@Entity()
+@Entity({ name: 'User' })
 export class Post {
   @PrimaryGeneratedColumn({
     comment: '아이디',
