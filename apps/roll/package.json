@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node .",
-    "lint": "eslint --flag unstable_ts_config --cache"
+    "lint": "eslint --flag unstable_ts_config --cache",
+    "format": "prettier --cache --write --log-level warn ./src"
   },
   "dependencies": {
     "robotjs": "0.6.0"

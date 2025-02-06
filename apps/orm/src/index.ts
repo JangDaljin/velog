@@ -4,7 +4,7 @@ import * as MyTypeOrm from './typeorm';
 
 main();
 async function main(): Promise<void> {
-  // await runSequelize();
+  await runSequelize();
   await runTypeOrm();
 }
 
@@ -68,37 +68,37 @@ async function runTypeOrm(): Promise<void> {
       await queryRunner.startTransaction();
 
       //EntityManager
-      // const userInsertResult = await queryRunner.manager.insert(
-      //   MyTypeOrm.User,
-      //   {
-      //     name: 'typeorm_name_1',
-      //     age: 10,
-      //   },
-      // );
-      // const userId = userInsertResult.raw;
+      const userInsertResult = await queryRunner.manager.insert(
+        MyTypeOrm.User,
+        {
+          name: 'typeorm_name_1',
+          age: 10,
+        },
+      );
+      const userId = userInsertResult.raw;
 
       //Repository & API
-      // queryRunner.manager.getRepository(MyTypeOrm.Post).insert({
-      //   title: 'typeorm_title_1',
-      //   content: 'typeorm_content_1',
-      //   user: {
-      //     id: userId,
-      //   },
-      // });
+      queryRunner.manager.getRepository(MyTypeOrm.Post).insert({
+        title: 'typeorm_title_1',
+        content: 'typeorm_content_1',
+        user: {
+          id: userId,
+        },
+      });
 
       //Repository & QueryBuilder
       const postRepository = queryRunner.manager.getRepository(MyTypeOrm.Post);
-      // await postRepository
-      //   .createQueryBuilder()
-      //   .insert()
-      //   .values({
-      //     title: 'typeorm_title_2',
-      //     content: 'typeorm_content_2',
-      //     user: {
-      //       id: userId,
-      //     },
-      //   })
-      //   .execute();
+      await postRepository
+        .createQueryBuilder()
+        .insert()
+        .values({
+          title: 'typeorm_title_2',
+          content: 'typeorm_content_2',
+          user: {
+            id: userId,
+          },
+        })
+        .execute();
 
       const postWithUsers1 = await postRepository.find({
         select: {

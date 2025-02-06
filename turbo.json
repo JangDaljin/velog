@@ -12,6 +12,18 @@
       "outputLogs": "errors-only",
       "inputs": ["./src/**/*"],
       "cache": true
+    },
+    "test": {
+      "dependsOn": ["^lint"],
+      "outputLogs": "errors-only",
+      "inputs": ["./src/**/*"],
+      "cache": true
+    },
+    "format": {
+      "dependsOn": ["^format"],
+      "outputLogs": "errors-only",
+      "inputs": ["./src/**/*"],
+      "cache": true
     }
   }
 }
