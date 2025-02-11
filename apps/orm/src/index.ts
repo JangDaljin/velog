@@ -1,7 +1,9 @@
 import 'reflect-metadata';
+
+import * as MyMikroOrm from './mikro-orm';
+import { TypedPrismaClient } from './prisma/prisma-client';
 import * as MySequelize from './sequelize';
 import * as MyTypeOrm from './typeorm';
-import * as MyMikroOrm from './mikro-orm';
 
 main();
 
@@ -9,6 +11,7 @@ async function main(): Promise<void> {
   await runSequelize();
   await runTypeOrm();
   await runMikroOrm();
+  await runPrisma();
 }
 
 async function runSequelize(): Promise<void> {
@@ -195,4 +198,58 @@ async function runMikroOrm(): Promise<void> {
   });
 
   await mikroOrm.close();
+}
+
+async function runPrisma(): Promise<void> {
+  const prismaClient = new TypedPrismaClient({});
+
+  await prismaClient.$connect();
+
+  const users = await prismaClient.$transaction(async (transaction) => {
+    const user = await transaction.user.create({
+      data: {
+        age: 1,
+        name: 'PRISMA NAME',
+      },
+    });
+
+    await transaction.post.createMany({
+      data: [
+        {
+          title: 'PRISMA POST TITLE 1',
+          content: 'PRISMA POST CONTENT 1',
+          userId: user.id,
+        },
+        {
+          title: 'PRISMA POST TITLE 2',
+          content: 'PRISMA POST CONTENT 2',
+          userId: user.id,
+        },
+      ],
+    });
+
+    const users = await transaction.user.findMany({
+      select: {
+        id: true,
+        age: true,
+        createdAt: true,
+        Post: {
+          select: {
+            id: true,
+            title: true,
+            content: true,
+          },
+        },
+      },
+      where: {
+        id: user.id,
+      },
+    });
+
+    return users;
+  });
+
+  users.forEach((user) => console.log(JSON.stringify(user, null, 2)));
+
+  await prismaClient.$disconnect();
 }
