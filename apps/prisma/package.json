@@ -1,5 +1,5 @@
 {
-  "name": "template",
+  "name": "prisma",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "scripts": {
@@ -8,5 +8,8 @@
     "lint": "eslint --flag unstable_ts_config --cache",
     "format": "prettier --cache --write --log-level warn ./src"
   },
-  "dependencies": {}
+  "dependencies": {
+    "prisma": "6.4.0",
+    "@prisma/client": "6.4.0"
+  }
 }
