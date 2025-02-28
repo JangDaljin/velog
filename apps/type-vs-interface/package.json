@@ -1,0 +1,12 @@
+{
+  "name": "type-vs-interface",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node -r tsconfig-paths/register .",
+    "lint": "eslint --flag unstable_ts_config --cache",
+    "format": "prettier --cache --write --log-level warn ./src"
+  },
+  "dependencies": {}
+}
